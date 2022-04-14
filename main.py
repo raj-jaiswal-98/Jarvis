@@ -12,6 +12,7 @@ GUILD = os.getenv('DISCORD_GUILD')
 api_dev_key=os.getenv('api_dev_key')
 api_user_key=os.getenv('api_user_key')
 intents = discord.Intents.default()
+api_paste_key = os.getenv('API_PASTE_KEY')
 intents.members=True
 # client = discord.Client(intents=intents)
 bot = commands.Bot(command_prefix='!',intents=intents)
@@ -20,7 +21,6 @@ bot = commands.Bot(command_prefix='!',intents=intents)
 
 def pull_paste_backfunc():
   url="https://pastebin.com/api/api_raw.php"
-  api_paste_key='8uh787ZG'
   api_option='show_paste'
   data={
     'api_dev_key':api_dev_key,
