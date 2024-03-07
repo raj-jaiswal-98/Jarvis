@@ -12,6 +12,7 @@ GUILD = os.getenv('DISCORD_GUILD')
 api_dev_key=os.getenv('api_dev_key')
 api_user_key=os.getenv('api_user_key')
 intents = discord.Intents.default()
+import json
 api_paste_key = os.getenv('API_PASTE_KEY')
 intents.members=True
 # client = discord.Client(intents=intents)
@@ -148,6 +149,25 @@ async def list_pastes(ctx):
   await ctx.send("Pastes are:\n")
   await ctx.send("`Paste Title: "+paste_title+"\nPaste key: " +paste_key+'`')
 
+
+def get_response_from_bot(text):
+  link = 'https://app.aimarketplace.co/api/marketplace/models/382d1f69-2fed-4e15-a626-2c1909d66225/predict/'
+
+  inp = text
+  header = {'Authorization': 'Api-Key dACeYg0d.ZzIQ9Ey5ADD23FAG4H1CcdM6dsUzsHsr'}
+  payload = {'data':inp}
+  request = requests.request('POST',link, data=payload, headers=header)
+  print(request.text)
+  t = json.loads(request.text)
+  
+  return t['output']['Response']
+
+  
+@bot.command(name='ask')
+async def ask(ctx, *,text):
+  print(text)
+  t = get_response_from_bot(text)
+  await ctx.send(f"` {t}`")
 
 keep_alive() #this function is important to be upar than bot.run(token)
 bot.run(TOKEN)
